@@ -1,0 +1,8 @@
+mybatis:
+  type-aliases-package: edu.xalead.entity
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cms
+    username: root
+    password: root

@@ -1,0 +1,12 @@
+serve:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+zuul:
+  routes:
+    aaa:
+      path: /user-service/**
+      url: http://127.0.0.1:8085
+
+
