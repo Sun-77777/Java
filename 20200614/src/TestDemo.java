@@ -3,9 +3,6 @@ public class TestDemo {
         @Override
         public void run() {
             System.out.println("hello，我是一个线程");
-            while (true) {
-
-            }
         }
     }
     public static void main(String[] args) {
