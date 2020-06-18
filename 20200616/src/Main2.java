@@ -6,7 +6,7 @@ public class Main2 {
                 dianping();
             }
         };
-        t.run();
+        t.start();
         System.out.println("dazhong");
     }
     static void dianping() {
