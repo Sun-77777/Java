@@ -3,8 +3,9 @@ import java.util.Scanner;
 
 public class IODemo2 {
     public static void main(String[] args) throws IOException {
-        copeFile();
+        copyFile2();
     }
+
 
     private static void copeFile() throws IOException {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("d:/javacode/Bbb.java"));
