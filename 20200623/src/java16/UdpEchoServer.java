@@ -23,6 +23,8 @@ public class UdpEchoServer {
             //c.把响应写回给客户端
             DatagramPacket responsePacket = new DatagramPacket(response.getBytes(),response.getBytes().length,requestPacket.getSocketAddress());
             socket.send(responsePacket);
+
+            System.out.printf("[%s:%d] req: %s resp: %s",requestPacket.getAddress(),requestPacket.getPort(),request,response);
         }
     }
 

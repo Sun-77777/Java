@@ -13,7 +13,9 @@ public class TcpClient {
     //d)把响应数据显示到界面上
     private Socket socket = null;
 
+
     public TcpClient(String serverIp,int serverPort) throws IOException {
+
         socket = new Socket(serverIp,serverPort);
         //new成功以后，就和服务器连接建立成功
     }
