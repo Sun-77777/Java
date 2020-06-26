@@ -19,12 +19,20 @@ public class UdpEchoServer {
             socket.receive(requestPacket);
             String request = new String(requestPacket.getData(),0,requestPacket.getLength()).trim();
             //b.计算请求的响应
-            /*DatagramPacket responsePacket = process(requestPacket);
-            socket.send(responsePacket);*/
+            String response = process(request);
+            //c.把响应写回给客户端
+            DatagramPacket responsePacket = new DatagramPacket(response.getBytes(),response.getBytes().length,requestPacket.getSocketAddress());
+            socket.send(responsePacket);
         }
     }
 
-    public static void main(String[] args) {
+    public String process(String request) {
+        return request;
+    }
+
+    public static void main(String[] args) throws IOException {
+        UdpEchoServer server = new UdpEchoServer(9090);
+        server.start();
 
     }
 }
