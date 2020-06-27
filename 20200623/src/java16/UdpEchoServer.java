@@ -18,13 +18,18 @@ public class UdpEchoServer {
             DatagramPacket requestPacket = new DatagramPacket(new byte[4096],4096);
             socket.receive(requestPacket);
             String request = new String(requestPacket.getData(),0,requestPacket.getLength()).trim();
+
             //b.计算请求的响应
             String response = process(request);
+            if (response.equals("exit")) {
+                break;
+            }
             //c.把响应写回给客户端
             DatagramPacket responsePacket = new DatagramPacket(response.getBytes(),response.getBytes().length,requestPacket.getSocketAddress());
             socket.send(responsePacket);
 
             System.out.printf("[%s:%d] req: %s resp: %s",requestPacket.getAddress(),requestPacket.getPort(),request,response);
+            System.out.println();
         }
     }
 
