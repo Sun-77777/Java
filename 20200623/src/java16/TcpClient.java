@@ -12,10 +12,13 @@ public class TcpClient {
     //c)读取服务器的响应数据
     //d)把响应数据显示到界面上
     private Socket socket = null;
+    private String serverIp = null;
+    private int serverPort = 0;
 
 
     public TcpClient(String serverIp,int serverPort) throws IOException {
-
+        this.serverIp = serverIp;
+        this.serverPort = serverPort;
         socket = new Socket(serverIp,serverPort);
         //new成功以后，就和服务器连接建立成功
     }
@@ -39,12 +42,12 @@ public class TcpClient {
                 System.out.println(response);
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws IOException {
-        TcpClient client = new TcpClient("127.0.0.0",9090);
+        TcpClient client = new TcpClient("127.0.0.1",9090);
         client.start();
     }
 }
