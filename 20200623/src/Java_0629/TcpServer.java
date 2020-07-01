@@ -12,7 +12,7 @@ public class TcpServer {
     }
 
     public void start() throws IOException {
-        System.out.printf("服务器启动");
+        System.out.println("服务器启动");
         
         while (true) {
             //先从内核中获取到一个TCP 连接
@@ -26,6 +26,7 @@ public class TcpServer {
 
     private void processConnection(Socket clientSocket) throws IOException {
         System.out.printf("[%s %d] 客户端上线\n",clientSocket.getInetAddress().toString(),clientSocket.getPort());
+
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
              BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))){
             while (true) {
@@ -35,8 +36,9 @@ public class TcpServer {
                 String response = process(request);
                 //3.把响应返回给客户端
                 bufferedWriter.write(response + "\n");
+                bufferedWriter.flush();
 
-                System.out.printf("[%s:%d] req: %s resp : %s",clientSocket.getInetAddress().toString(),clientSocket.getPort());
+                System.out.printf("[%s:%d] req: %s resp : %s\n",clientSocket.getInetAddress().toString(),clientSocket.getPort(),request,response);
 
             }
         } catch (IOException e) {
