@@ -8,10 +8,11 @@ public class M {
         Scanner scan = new Scanner(System.in);
 
             int n = scan.nextInt();
+            String[] arr = new String[n];
             Map<String,Integer> map = new HashMap<>();
             for (int i = 0; i < n; i++) {
-                String name = scan.next();
-                map.put(name,0);
+                arr[i] = scan.next();
+                map.put(arr[i],0);
             }
             int m = scan.nextInt();
             int count = 0;
@@ -24,12 +25,13 @@ public class M {
                     count++;
                 }
             }
-            for (Map.Entry<String,Integer> entry : map.entrySet()) {
-                System.out.println(entry.getKey() + " : " + entry.getValue());
+            for (int i = 0; i < n; i++) {
+                System.out.println(arr[i] + " : " + map.get(arr[i]));
             }
-            if (count != 0) {
-                System.out.println("Invalid : " + count);
-            }
+
+
+            System.out.println("Invalid : " + count);
+
 
     }
 }
