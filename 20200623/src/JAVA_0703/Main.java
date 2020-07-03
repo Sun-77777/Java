@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        //String str1 = scan.nextLine();
+        String str1 = scan.nextLine();
         String str2 = scan.nextLine();
-        //System.out.println(convertIp10(str1));
+        System.out.println(convertIp10(str1));
         System.out.println(convertIp(str2));
 
     }
