@@ -60,6 +60,10 @@ public class HttpServerV1 {
             if (url.equals("/OK")) {
                 resp = "<h1>hello</h1>";
                 bufferedWriter.write(version + " 200 OK\n");
+            } else if (url.equals("/seeother")) {
+                bufferedWriter.write(version + " 303 See Other\n");
+                bufferedWriter.write("Location: http://www.sogou.com\n");
+                resp = "";
             } else if (url.equals("/NotFound")) {
                 resp = "<h1>not found</h1>";
                 bufferedWriter.write(version + " 404 Not Found\n");
