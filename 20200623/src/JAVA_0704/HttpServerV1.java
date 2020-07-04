@@ -56,9 +56,18 @@ public class HttpServerV1 {
             }
             System.out.println();
             //2.根据请求计算响应
-            String resp = "<h1>hello</h1>";
+            String resp = "";
+            if (url.equals("/OK")) {
+                resp = "<h1>hello</h1>";
+                bufferedWriter.write(version + " 200 OK\n");
+            } else if (url.equals("/NotFound")) {
+                resp = "<h1>not found</h1>";
+                bufferedWriter.write(version + " 404 Not Found\n");
+            } else {
+                resp = "<h1>default</h1>";
+                bufferedWriter.write(version + " 200 OK\n");
+            }
             //3.把响应返回给客户端
-            bufferedWriter.write(version + " 200 OK\n");
             bufferedWriter.write("Context-Type: text/html\n");
             bufferedWriter.write("Content-Length: " + resp.getBytes().length + "\n");
             bufferedWriter.write("\n");
