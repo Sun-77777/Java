@@ -29,7 +29,7 @@ public class HttpServerV2 {
     }
 
     private void process(Socket clientSocket) {
-        
+
     }
 
     public static void main(String[] args) {
