@@ -13,7 +13,8 @@ public class HttpRequest {
     private String version;
     Map<String,String> headers = new HashMap<>();
     Map<String,String> parameters = new HashMap<>();
-    private static HttpRequest build(InputStream inputStream) throws IOException {
+    //用工厂方法构造
+    public static HttpRequest build(InputStream inputStream) throws IOException {
         //读取请求并解析
         HttpRequest request = new HttpRequest();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -62,5 +63,16 @@ public class HttpRequest {
 
     public String getParameters(String key) {
         return parameters.get(key);
+    }
+
+    @Override
+    public String toString() {
+        return "HttpRequest{" +
+                "method='" + method + '\'' +
+                ", url='" + url + '\'' +
+                ", version='" + version + '\'' +
+                ", headers=" + headers +
+                ", parameters=" + parameters +
+                '}';
     }
 }
