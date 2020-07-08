@@ -13,7 +13,7 @@ public class HttpRequest {
     private Map<String,String> cookies = new HashMap<>();
     private String body;
 
-    public static HttpRequest buile(InputStream inputStream) {
+    public static HttpRequest build(InputStream inputStream) {
         HttpRequest request = new HttpRequest();
         return request;
     }
