@@ -15,6 +15,7 @@ public class HttpRequest {
 
     public static HttpRequest build(InputStream inputStream) {
         HttpRequest request = new HttpRequest();
+
         return request;
     }
     
