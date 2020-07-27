@@ -1,11 +1,16 @@
 package model;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+//管理数据库连接
+//1.建立连接  2.关闭连接
+//DataSource 每个应用程序只应该有一个实例（单例）
+//DBUtil 本质上就是实现了一个单例模式，管理了唯一的一个DataSource实例
 //单例模式 的实现由两种分格：1.懒汉模式 2.饿汉模式
 public class DBUtil {
     //懒汉模式
@@ -38,6 +43,30 @@ public class DBUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void close(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
