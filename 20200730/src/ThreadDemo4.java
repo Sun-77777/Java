@@ -1,7 +1,7 @@
 public class ThreadDemo4 {
     static class counter {
         public int count = 0;
-        public void increase() {
+        synchronized public void increase() {
             count++;
         }
     }
