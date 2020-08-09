@@ -24,6 +24,24 @@
     <url-pattern>/ServletDemo2</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ServletDemo4</servlet-name>
+    <servlet-class>ServletDemo4</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDemo4</servlet-name>
+    <url-pattern>/ServletDemo4</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ServletDemo5</servlet-name>
+    <servlet-class>ServletDemo5</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDemo5</servlet-name>
+    <url-pattern>/ServletDemo5</url-pattern>
+  </servlet-mapping>
+
 
 
 </web-app>

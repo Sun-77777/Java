@@ -1,4 +1,5 @@
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,11 @@ public class ServletDemo4 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1.先构造Cookie对象，每个Cookie
-
+        Cookie cookie = new Cookie("username","hqq");
+        Cookie cookie1 = new Cookie("age","20");
+        resp.addCookie(cookie);
+        resp.addCookie(cookie1);
+        resp.setContentType("text/html; charset=utf-8");
+        resp.getWriter().write("返回cookie成功");
     }
 }
