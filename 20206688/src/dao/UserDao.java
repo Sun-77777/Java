@@ -40,21 +40,20 @@ public class UserDao {
         return user;
     }
 
-    public void register(User user) {
+    public void register(User newUser) {
         Connection conn = null;
         PreparedStatement ps = null;
 
 
         try {
-            String sql = "insert into user values (?,?,?,?,?,?)";
+            String sql = "insert into user values (null,?,?,?,?,?)";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1,2);
-            ps.setString(2,"hqq");
-            ps.setString(3,"123");
-            ps.setInt(4,20);
-            ps.setString(5,"女");
-            ps.setString(6,"33333333@qq.com");
+            ps.setString(1,newUser.getUsername());
+            ps.setString(2,newUser.getPassword());
+            ps.setInt(3,newUser.getAge());
+            ps.setString(4,newUser.getGender());
+            ps.setString(5,newUser.getEmail());
             int ret = ps.executeUpdate();
             if (ret == 1) {
                 System.out.println("注册成功");
