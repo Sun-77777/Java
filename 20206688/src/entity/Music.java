@@ -34,11 +34,11 @@ public class Music {
         this.singer = singer;
     }
 
-    public Date getTime() {
+    public Date getDate() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setDate(Date time) {
         this.time = time;
     }
 
