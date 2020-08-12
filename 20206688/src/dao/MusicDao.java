@@ -28,7 +28,7 @@ public class MusicDao {
                 music.setId(rs.getInt("id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
-                music.setTime(rs.getDate("time"));
+                music.setDate(rs.getDate("time"));
                 music.setUrl(rs.getString("url"));
                 music.setUserid(rs.getInt("userid"));
                 listmusic.add(music);
@@ -65,7 +65,7 @@ public class MusicDao {
                 music.setId(rs.getInt("id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
-                music.setTime(rs.getDate("time"));
+                music.setDate(rs.getDate("time"));
                 music.setUrl(rs.getString("url"));
                 music.setUserid(rs.getInt("userid"));
             }
@@ -98,7 +98,7 @@ public class MusicDao {
                 music.setId(rs.getInt("id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
-                music.setTime(rs.getDate("time"));
+                music.setDate(rs.getDate("time"));
                 music.setUrl(rs.getString("url"));
                 music.setUserid(rs.getInt("userid"));
                 musicList.add(music);
@@ -112,24 +112,29 @@ public class MusicDao {
     }
 
     /**
-     * 上传音乐
-     * @param music
+     *
+     *
+     * @param title
+     * @param singer
+     * @param time
+     * @param url
+     * @param userid
      * @return
      */
-    public int uploadMusic(Music music) {
+    public int insertMusic(String title,String singer,String time,String url,int userid) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+
 
         try {
-            String sql = "insert into music vlaues (null,?,?,?,?,?)";
+            String sql = "insert into music(title, singer, time, url, userid) values (?,?,?,?,?)";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1,music.getTitle());
-            ps.setString(2,music.getSinger());
-            ps.setDate(3, (Date) music.getTime());
-            ps.setString(4,music.getUrl());
-            ps.setInt(5,music.getUserid());
+            ps.setString(1,title);
+            ps.setString(2,singer);
+            ps.setString(3,time);
+            ps.setString(4,url);
+            ps.setInt(5,userid);
             int ret = ps.executeUpdate();
             if (ret == 1) {
                 return 1;
@@ -137,7 +142,7 @@ public class MusicDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBUtils.close(conn,ps,rs);
+            DBUtils.close(conn,ps,null);
         }
         return 0;
     }
@@ -319,7 +324,7 @@ public class MusicDao {
                 music.setId(rs.getInt("id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
-                music.setTime(rs.getDate("time"));
+                music.setDate(rs.getDate("time"));
                 music.setUrl(rs.getString("url"));
                 music.setUserid(rs.getInt("userid"));
                 musicList.add(music);
@@ -350,7 +355,7 @@ public class MusicDao {
                 music.setId(rs.getInt("id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
-                music.setTime(rs.getDate("time"));
+                music.setDate(rs.getDate("time"));
                 music.setUrl(rs.getString("url"));
                 music.setUserid(rs.getInt("userid"));
                 musiclist.add(music);
