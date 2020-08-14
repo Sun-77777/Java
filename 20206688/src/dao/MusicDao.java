@@ -89,7 +89,7 @@ public class MusicDao {
         ResultSet rs = null;
 
         try {
-            String sql = "select * from music where title like '%" + str + "'%";
+            String sql = "select * from music where title like '%" + str + "%'";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -113,7 +113,7 @@ public class MusicDao {
 
     /**
      *
-     *
+     *添加音乐
      * @param title
      * @param singer
      * @param time
@@ -285,7 +285,7 @@ public class MusicDao {
         PreparedStatement ps = null;
 
         try {
-            String sql = "delete form lovemusic where user_id = ? and music_id = ?";
+            String sql = "delete from lovemusic where user_id = ? and music_id = ?";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1,userid);
@@ -314,11 +314,11 @@ public class MusicDao {
         List<Music> musicList = new ArrayList<>();
 
         try {
-            String sql = "select * from music where id = (select music_id from lovemusic where user_id = ?)";
+            String sql = "select * from music where id = any(select music_id from lovemusic where user_id = ?)";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
             ps.setInt(1,userid);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Music music = new Music();
                 music.setId(rs.getInt("id"));
@@ -345,14 +345,14 @@ public class MusicDao {
         List<Music> musiclist = new ArrayList<>();
 
         try {
-            String sql = "select * from music where id = (select music_id from lovemusic where user_id = ?) and title like '%" + str + "%'";
+            String sql = "select m.id as music_id,title,singer,time,url,userid from lovemusic lm,music m where lm.music_id=m.id and user_id=? and title like '%"+str+"%'";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1,userid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Music music = new Music();
-                music.setId(rs.getInt("id"));
+                music.setId(rs.getInt("music_id"));
                 music.setTitle(rs.getString("title"));
                 music.setSinger(rs.getString("singer"));
                 music.setDate(rs.getDate("time"));
