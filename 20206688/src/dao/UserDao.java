@@ -3,10 +3,7 @@ package dao;
 import entity.User;
 import util.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDao {
     public User login(User loginUser) {
@@ -28,9 +25,6 @@ public class UserDao {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setAge(rs.getInt("age"));
-                user.setGender(rs.getString("gender"));
-                user.setEmail(rs.getString("email"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,20 +34,38 @@ public class UserDao {
         return user;
     }
 
+    public String ifExistUser(String username) {
+        String name = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            String sql = "select * from user where username = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,username);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(conn,ps,rs);
+        }
+        return name;
+
+    }
+
     public void register(User newUser) {
         Connection conn = null;
         PreparedStatement ps = null;
-
-
         try {
-            String sql = "insert into user values (null,?,?,?,?,?)";
+            String sql = "insert into user values (null,?,?)";
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1,newUser.getUsername());
             ps.setString(2,newUser.getPassword());
-            ps.setInt(3,newUser.getAge());
-            ps.setString(4,newUser.getGender());
-            ps.setString(5,newUser.getEmail());
             int ret = ps.executeUpdate();
             if (ret == 1) {
                 System.out.println("注册成功");
