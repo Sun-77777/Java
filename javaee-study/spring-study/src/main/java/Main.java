@@ -6,7 +6,7 @@ public class Main {
         ApplicationContext context = new
                 ClassPathXmlApplicationContext("applications.xml");
 
-        Student student = (Student) context.getBean("s");
+        Student student = (Student) context.getBean("aa");
         System.out.println(student);
     }
 }

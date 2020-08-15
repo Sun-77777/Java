@@ -7,9 +7,24 @@
     <!-- 通过bean标签定义bean对象，spring Bean容器是通过-->
     <!-- 通过无参的构造方法，创建一个对象，如果该类型没有无参的构造方法，就会报错-->
 
+    <bean id="s" class="java.lang.String">
+        <constructor-arg value="北京烤鸭"/>
+    </bean>
 
-    <bean id="s" class="Student">
-        <property name="name" value="zhangsan"/>
-        <property name="age" value="12"/>
+    <bean id="aa" class="Student">
+        <property name="name" ref="s"/>
+        <property name="age" value="2"/>
+        <property name="next" ref="bb"/>
+    </bean>
+
+    <bean id="bb" class="Student">
+        <property name="name" value="甜皮鸭"/>
+        <property name="age" value="3"/>
+        <property name="next" ref="cc"/>
+    </bean>
+
+    <bean id="cc" class="Student">
+        <property name="name" value="周黑鸭"/>
+        <property name="age" value="4"/>
     </bean>
 </beans>
