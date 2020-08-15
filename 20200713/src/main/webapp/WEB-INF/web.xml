@@ -42,6 +42,14 @@
     <url-pattern>/ServletDemo5</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ServletDemo6</servlet-name>
+    <servlet-class>ServletDemo6</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDemo6</servlet-name>
+    <url-pattern>/ServletDemo6</url-pattern>
+  </servlet-mapping>
 
 
 </web-app>

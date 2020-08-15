@@ -1,9 +1,9 @@
 package servlet;
 
-import entity.Music;
+
 import entity.User;
 import service.MusicService;
-import service.UserService;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +25,7 @@ public class UploadInsertServlet extends HttpServlet {
         String fileName = (String) req.getSession().getAttribute("fileName");
         String[] strings = fileName.split("\\.");
         String title = strings[0];
-        String single = req.getParameter("single");
+        String singer = req.getParameter("singer");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String time = sdf.format(new Date());
         String url = "music\\" + title;
@@ -33,10 +33,13 @@ public class UploadInsertServlet extends HttpServlet {
         int user_id = user.getId();
 
         MusicService musicService = new MusicService();
-        int ret = musicService.insertMusic(title,single,time,url,user_id);
-        if (ret == 1) {
+        int ret = musicService.insertMusic(title,singer,time,url,user_id);
+        if (ret != 0) {
             resp.sendRedirect("list.html");
+        } else {
+            System.out.println("上传数据库失败");
         }
+
 
     }
 }
