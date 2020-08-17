@@ -89,4 +89,42 @@ public class MyLinkedList {
         }
         return cur;
     }
+
+    public void remove(int key) {
+        if (this.head == null) {
+            return;
+        }
+        if (this.head.val == key) {
+            this.head = this.head.next;
+        }
+        ListNode prev = this.head;
+        while (prev.next != null) {
+            if (prev.next.val == key) {
+                prev.next = prev.next.next;
+                return;
+            } else {
+                prev = prev.next;
+            }
+        }
+    }
+    public void removeAllKey(int key) {
+        if (this.head == null) {
+            return;
+        }
+        ListNode prev = this.head;
+        ListNode cur = null;
+        while (prev.next != null) {
+            if (prev.next.val == key) {
+                cur = prev.next;
+                while (cur.next.val == key) {
+                    cur = cur.next;
+                }
+                prev.next = cur.next;
+            }
+            prev = prev.next;
+        }
+        if (this.head.val == key) {
+            this.head = this.head.next;
+        }
+    }
 }
