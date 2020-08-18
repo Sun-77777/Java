@@ -23,7 +23,7 @@ public class MyLinkedList {
     public void display() {
         ListNode cur = this.head;
         while (cur != null) {
-            System.out.println(cur.val + " ");
+            System.out.print(cur.val + " ");
             cur = cur.next;
         }
     }
@@ -96,6 +96,7 @@ public class MyLinkedList {
         }
         if (this.head.val == key) {
             this.head = this.head.next;
+            return;
         }
         ListNode prev = this.head;
         while (prev.next != null) {
@@ -110,13 +111,13 @@ public class MyLinkedList {
     public void removeAllKey(int key) {
         if (this.head == null) {
             return;
-        }
+        }                  //2 2 2 3 4 2
         ListNode prev = this.head;
         ListNode cur = null;
         while (prev.next != null) {
             if (prev.next.val == key) {
                 cur = prev.next;
-                while (cur.next.val == key) {
+                while (cur.next != null && cur.next.val == key) {
                     cur = cur.next;
                 }
                 prev.next = cur.next;
