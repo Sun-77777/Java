@@ -9,7 +9,7 @@ public class TestTree {
         if (root == null) {
             return 0;
         }
-        return 1 + size(root.left) + size(root.right)
+        return 1 + size(root.left) + size(root.right);
     }
 
     public int leafSize(TreeNode root) {
@@ -20,5 +20,15 @@ public class TestTree {
             return 1;
         }
         return leafSize(root.left) + leafSize(root.right);
+    }
+
+    public int kLevelSize(TreeNode root,int k) {
+        if (root == null || k < 1) {
+            return 0;
+        }
+        if (k == 1) {
+            return 1;
+        }
+        return kLevelSize(root.left,k-1) + kLevelSize(root.right,k-1);
     }
 }
