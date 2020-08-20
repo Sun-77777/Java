@@ -31,4 +31,19 @@ public class TestTree {
         }
         return kLevelSize(root.left,k-1) + kLevelSize(root.right,k-1);
     }
+
+    public TreeNode find(TreeNode root,char toFind) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == toFind) {
+            return root;
+        }
+        TreeNode result = find(root.left,toFind);
+        if (result != null) {
+            return result;
+        }
+        return find(root.right,toFind);
+    }
+
 }
