@@ -7,7 +7,7 @@ public class MyQueueByLinkedList {
             this.val = val;
         }
     }
-    private ListNode head;
+    private ListNode head = null;
     private ListNode tail;
 
     //链表尾插
