@@ -14,6 +14,30 @@ public class TestTree4 {
             this.val = val;
         }
     }
+
+    public TreeNode lca;
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        Helper(root,p,q);
+        return lca;
+    }
+    public boolean Helper(TreeNode root,TreeNode p,TreeNode q) {
+        if (root == null) {
+            return false;
+        }
+        int left = Helper(root.left,p,q) ? 1 : 0;
+        int right = Helper(root.right,p,q) ? 1 : 0;
+        int mid = (root == p || root == q) ? 1 : 0;
+        if (left + right + mid == 2) {
+            lca = root;
+        }
+        return left + right + mid > 0;
+    }
+
+
     private List<List<Integer>> result = new ArrayList<>();
 
     public List<List<Integer>> levelOrder(TreeNode root) {
