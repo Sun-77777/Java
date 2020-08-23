@@ -1,3 +1,5 @@
+import sun.reflect.generics.tree.Tree;
+
 import java.util.Scanner;
 
 public class BulidTreeDemo {
@@ -22,6 +24,12 @@ public class BulidTreeDemo {
     }
 
     private static void inOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left);
+        System.out.print(root.val + " ");
+        inOrder(root.right);
     }
 
     private static int index = 0;
@@ -31,7 +39,17 @@ public class BulidTreeDemo {
     }
 
     private static TreeNode createTreePreOrder(String line) {
-        return null;
+        char c = line.charAt(index);
+        if (c == '#') {
+            return null;
+        }
+        //当前字符不是# ，就创建一个节点
+        TreeNode node = new TreeNode(c);
+        index++;
+        node.left = createTreePreOrder(line);
+        index++;
+        node.right = createTreePreOrder(line);
+        return node;
     }
 
     /*private static TreeNode createTreePreOrder(String line) {
