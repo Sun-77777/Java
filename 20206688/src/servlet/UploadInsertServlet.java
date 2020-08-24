@@ -28,7 +28,7 @@ public class UploadInsertServlet extends HttpServlet {
         String singer = req.getParameter("singer");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String time = sdf.format(new Date());
-        String url = "music\\" + title;
+        String url = "music/" + title;
         User user = (User) req.getSession().getAttribute("user");
         int user_id = user.getId();
 
