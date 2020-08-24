@@ -7,6 +7,24 @@ public class Tttttt {
             this.val = val;
         }
     }
+
+    //反转链表
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode cur = head;
+        ListNode prev = null;
+        ListNode curNext = null;
+        while (cur != null) {
+            curNext = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = curNext;
+        }
+        return prev;
+    }
+
     //删除所有值是val的结点
     public ListNode removeElements(ListNode head, int val) {
         if (head == null) {
