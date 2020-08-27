@@ -15,7 +15,7 @@ public class DBUtil {
 
     private volatile static DataSource dataSource = null;
 
-    private static DataSource getDataSource() {
+    public static DataSource getDataSource() {
         if (dataSource == null) {
             synchronized (DBUtil.class) {
                 if (dataSource == null) {
@@ -29,7 +29,7 @@ public class DBUtil {
         return dataSource;
     }
 
-    private static Connection getConnection() {
+    public static Connection getConnection() {
         try {
             return getDataSource().getConnection();
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class DBUtil {
         return null;
     }
 
-    private static void close(Connection conn, PreparedStatement ps, ResultSet rs) {
+    public static void close(Connection conn, PreparedStatement ps, ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
