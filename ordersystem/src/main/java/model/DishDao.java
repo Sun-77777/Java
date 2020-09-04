@@ -25,7 +25,7 @@ public class DishDao {
             ps.setString(1,dish.getName());
             ps.setInt(2,dish.getPrice());
             int ret = ps.executeUpdate();
-            if (ret != -1) {
+            if (ret != 1) {
                 throw new OrderSystemException("新添菜品失败");
             }
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class DishDao {
             ps = conn.prepareStatement(sql);
             ps.setInt(1,dishId);
             ret = ps.executeUpdate();
-            if (ret != -1) {
+            if (ret != 1) {
                 throw new OrderSystemException("删除菜品失败");
             }
         } catch (SQLException e) {
@@ -126,9 +126,11 @@ public class DishDao {
 
     public static void main(String[] args) throws OrderSystemException {
         DishDao dishDao = new DishDao();
-        Dish dish = new Dish();
-        dish.setName("老碗鱼");
-        dish.setPrice(4000);
-        dishDao.add(dish);
+        int ret = dishDao.delete(2);
+        System.out.println(ret);
+        /*Dish dish = new Dish();
+        dish.setName("红烧肉");
+        dish.setPrice(5000);
+        dishDao.add(dish);*/
     }
 }
