@@ -17,7 +17,6 @@ public class OrderDao {
         Connection conn = null;
         PreparedStatement ps = null;
 
-
         conn = DBUtil.getConnection();
         String sql = "insert into order_user(userId,time,isDone) values (?,now(),?)";
         try {
@@ -33,6 +32,6 @@ public class OrderDao {
         } finally {
             DBUtil.close(conn,ps,null);
         }
-
+        System.out.println("新增订单成功");
     }
 }
