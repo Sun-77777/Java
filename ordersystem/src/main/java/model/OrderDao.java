@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class OrderDao {
     //查看所有订单(管理员 普通用户)
@@ -12,11 +13,18 @@ public class OrderDao {
     //修改订单状态
     public void add(Order order) {
         Connection conn = null;
-        PreparedStatement PS = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
 
         conn = DBUtil.getConnection();
         String sql = "insert into order_user(userId,time,isDone) values (?,now(),?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,order.getUserId());
+            ps.setInt(2,order.getIsDone());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
