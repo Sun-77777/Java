@@ -158,7 +158,44 @@ public class OrderDao {
         return orders;
     }
     //3.查看指定用户的订单（普通用户，顾客）
+    public List<Order> selectByUserId(int userId) {
+        List<Order> orders = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        conn = DBUtil.getConnection();
+        String sql = "select * from order_user where userId = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("orderId"));
+                order.setUserId(rs.getInt("userId"));
+                order.setTime(rs.getTimestamp("time"));
+                order.setIsDone(rs.getInt("isDone"));
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(conn,ps,rs);
+        }
+        return orders;
+    }
     //4.查看订单的详细信息
+    //在这个方法中就要把这个Order 对象完整的填写进去。
+    //包括Order中有哪些的菜品，以及菜品的详情
+    public Order selectById(int orderId) {
+        //1.现根据orderId 得到一个Order对象
+        Order order = buileOrder(orderId);
+        //2.根据orderId 得到该orderId对应的菜品id列表
+        List<Integer> dishIds = selectDishId(orderId);
+        //3.根据菜品id 列表，查询dishes表，获取到菜品详情
+        order = getDishDetail(order,dishIds);
+    }
     //5.修改订单状态(订单是否已经完成)
 
     public static void main(String[] args) {
