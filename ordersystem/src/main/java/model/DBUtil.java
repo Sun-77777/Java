@@ -9,9 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBUtil {
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/orderSystem?characterEncoding=utf-8&useSSL=true";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/ordersystem?characterEncoding=utf-8&useSSL=true";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "root";
 
     private volatile static DataSource dataSource = null;
 
@@ -35,7 +35,7 @@ public class DBUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("数据库连接失败！");
+        System.out.println("数据库连接失败！请检查数据库是否启动正确，url是否正确");
         return null;
     }
 

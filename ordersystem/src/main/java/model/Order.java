@@ -50,4 +50,15 @@ public class Order {
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", userId=" + userId +
+                ", time=" + time +
+                ", isDone=" + isDone +
+                ", dishes=" + dishes +
+                '}';
+    }
 }

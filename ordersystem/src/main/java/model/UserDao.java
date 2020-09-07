@@ -87,13 +87,15 @@ public class UserDao {
         return null;
     }
 
-    /*public static void main(String[] args) throws OrderSystemException {
+    public static void main(String[] args) throws OrderSystemException {
         UserDao userDao = new UserDao();
-        User user = userDao.selectById(1);
-        System.out.println(user);
-        user = userDao.selectByName("qq");
+        User user = new User();
+        user.setName("qq");
+        user.setPassword("qq");
+        user.setIsAdmin(0);
+        userDao.add(user);
         System.out.println(user);
         
-    }*/
+    }
 
 }
