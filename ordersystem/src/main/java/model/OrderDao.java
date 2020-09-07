@@ -6,12 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 //1.新增订单
-//2.查看所有订单(管理员 商家)
+//2.查看所有订单(管理员 商家)()先不考虑详细菜品信息
 //3.查看指定用户的订单（普通用户，顾客）
-//4.查看订单的详细信息
+//4.查看指定订单的详细信息
 //5.修改订单状态(订单是否已经完成)
 public class OrderDao {
     //1.新增订单
@@ -123,6 +124,39 @@ public class OrderDao {
 
 
     //2.查看所有订单(管理员 商家)
+    //Order对象里，有一些orderId,userId这些属性，直接借助order_user表就获取到了
+    //还有一个重要的属性，dishes(List<Dish>)
+    //详细信息需要现根据order_dish表，获取到所有相关的dishID，然后在根据dishId去dishes表中查。
+    //仔细思考，可以发现，这里的订单获取 不需要获取那么详细的内容，只获取到订单的一些基本信息就行了。
+    //菜品信息，反正有一个查看指定订单详细信息的接口
+    //当前这个接口返回的Order对象，不包含dishes详细数据的
+    //这样做是为了让代码更简单，更高效.
+    public List<Order> SelectAll() {
+        List<Order> orders = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        conn = DBUtil.getConnection();
+        String sql = "select * from order_user";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setUserId(rs.getInt("orderId"));
+                order.setUserId(rs.getInt("userId"));
+                order.setTime(rs.getTimestamp("time"));
+                order.setIsDone(rs.getInt("isDone"));
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(conn,ps,rs);
+        }
+        return orders;
+    }
     //3.查看指定用户的订单（普通用户，顾客）
     //4.查看订单的详细信息
     //5.修改订单状态(订单是否已经完成)
