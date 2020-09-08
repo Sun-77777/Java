@@ -188,15 +188,101 @@ public class OrderDao {
     //4.查看订单的详细信息
     //在这个方法中就要把这个Order 对象完整的填写进去。
     //包括Order中有哪些的菜品，以及菜品的详情
-    public Order selectById(int orderId) {
+    //此处的操作，使用的是多次查询的方式完成的
+    //除此之外，也可以使用多表查询来完成。(sql语句会更复杂，但是java代码会更简单一些)
+    public Order selectById(int orderId) throws OrderSystemException {
         //1.现根据orderId 得到一个Order对象
         Order order = buileOrder(orderId);
         //2.根据orderId 得到该orderId对应的菜品id列表
         List<Integer> dishIds = selectDishId(orderId);
         //3.根据菜品id 列表，查询dishes表，获取到菜品详情
         order = getDishDetail(order,dishIds);
+        return order;
+    }
+    //
+    private Order getDishDetail(Order order, List<Integer> dishIds) throws OrderSystemException {
+        //1.转备好要返回的结果
+        List<Dish> dishes = new ArrayList<>();
+        //2.遍历dishIds 在dishes表中查。(前面已经有现成的方法了，直接调用)
+        DishDao dishDao = new DishDao();
+        for (Integer dishId : dishIds) {
+            dishes.add(dishDao.selectById(dishId));
+        }
+        order.setDishes(dishes);
+        return order;
+    }
+    //
+    private List<Integer> selectDishId(int orderId) {
+        List<Integer> dishIds = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        conn = DBUtil.getConnection();
+        String sql = "select * from order_dish where orderId = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,orderId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                dishIds.add(rs.getInt("dishId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(conn,ps,rs);
+        }
+        return dishIds;
+    }
+
+    //根据orderId 来查询对应的Order 对象的基本信息
+    private Order buileOrder(int orderId) {
+        Order order = new Order();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        conn = DBUtil.getConnection();
+        String sql = "select * from order_user where orderId = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,orderId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                order.setOrderId(rs.getInt("orderId"));
+                order.setUserId(rs.getInt("userId"));
+                order.setTime(rs.getTimestamp("time"));
+                order.setIsDone(rs.getInt("isDone"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(conn,ps,rs);
+        }
+        return order;
+
     }
     //5.修改订单状态(订单是否已经完成)
+    public void changeState(int orderId,int isDone) throws OrderSystemException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        conn = DBUtil.getConnection();
+        String sql = "update order_user set isDone = ? where orderId = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,isDone);
+            ps.setInt(2,orderId);
+            int ret = ps.executeUpdate();
+            if (ret != 1) {
+                throw new OrderSystemException("修改订单状态失败");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new OrderSystemException("修改订单状态失败");
+        } finally {
+            DBUtil.close(conn,ps,null);
+        }
+    }
 
     public static void main(String[] args) {
         OrderDao orderDao = new OrderDao();
