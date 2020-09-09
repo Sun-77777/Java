@@ -51,7 +51,6 @@ public class RegisterServlet extends HttpServlet {
                 //当前用户名重复了，就直接返回一个表示注册失败的信息.
                 throw new OrderSystemException("当前用户名已经存在");
             }
-
             //4.把提交的用户名密码构造成User对象，插入数据库
             User user = new User();
             user.setName(request.name);
