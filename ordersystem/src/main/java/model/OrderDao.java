@@ -80,7 +80,6 @@ public class OrderDao {
             }
             System.out.println("回滚成功") ;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new OrderSystemException("回滚失败");
         } finally {
             DBUtil.close(conn,ps,null);
@@ -131,7 +130,7 @@ public class OrderDao {
     //菜品信息，反正有一个查看指定订单详细信息的接口
     //当前这个接口返回的Order对象，不包含dishes详细数据的
     //这样做是为了让代码更简单，更高效.
-    public List<Order> SelectAll() {
+    public List<Order> selectAll() {
         List<Order> orders = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
