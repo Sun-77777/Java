@@ -110,7 +110,6 @@ public class OrderServlet extends HttpServlet {
             if (orderIdStr == null) {
                 //4.查找数据库
                 List<Order> orders = null;
-                orders = null;
                 if (user.getIsAdmin() == 1) {
                     orders = orderDao.selectAll();
                 } else {
@@ -123,6 +122,7 @@ public class OrderServlet extends HttpServlet {
                 //4.查找数据库，查找指定订单
                 int orderId = Integer.parseInt(orderIdStr);
                 Order order = orderDao.selectById(orderId);
+
                 // 如果是普通用户，查找时发现自身的userId和订单的userId不相符
                 //这就返回一个出错数据。
                 //如果是管理员，才允许查看所有用户的订单.

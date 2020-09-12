@@ -38,7 +38,7 @@ public class OrderDao {
         PreparedStatement ps = null;
 
         conn = DBUtil.getConnection();
-        String sql = "insert into orderDish values (?,?)";
+        String sql = "insert into order_dish values (?,?)";
         try {
             conn.setAutoCommit(false);
             //关闭自动提交。默认是自动提交的，调用executeXXX就自动把请求sql发给服务器
@@ -48,7 +48,7 @@ public class OrderDao {
             List<Dish> dishes = order.getDishes();
             for (Dish dish : dishes) {
                 ps.setInt(1,order.getOrderId());
-                ps.setInt(2,order.getUserId());
+                ps.setInt(2,dish.getDishId());
                 ps.addBatch();//给sql新增一个片段
             }
             ps.executeBatch();//把刚才的sql进行执行(不是真正的执行)
@@ -70,7 +70,7 @@ public class OrderDao {
         PreparedStatement ps = null;
 
         conn = DBUtil.getConnection();
-        String sql = "delete form order_user where orderId = ?";
+        String sql = "delete from order_user where orderId = ?";
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1,orderId);
@@ -143,7 +143,7 @@ public class OrderDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Order order = new Order();
-                order.setUserId(rs.getInt("orderId"));
+                order.setOrderId(rs.getInt("orderId"));
                 order.setUserId(rs.getInt("userId"));
                 order.setTime(rs.getTimestamp("time"));
                 order.setIsDone(rs.getInt("isDone"));
@@ -191,9 +191,9 @@ public class OrderDao {
     //除此之外，也可以使用多表查询来完成。(sql语句会更复杂，但是java代码会更简单一些)
     public Order selectById(int orderId) throws OrderSystemException {
         //1.现根据orderId 得到一个Order对象
-        Order order = buileOrder(orderId);
+        Order order = buildOrder(orderId);
         //2.根据orderId 得到该orderId对应的菜品id列表
-        List<Integer> dishIds = selectDishId(orderId);
+        List<Integer> dishIds = selectDishIds(orderId);
         //3.根据菜品id 列表，查询dishes表，获取到菜品详情
         order = getDishDetail(order,dishIds);
         return order;
@@ -205,13 +205,14 @@ public class OrderDao {
         //2.遍历dishIds 在dishes表中查。(前面已经有现成的方法了，直接调用)
         DishDao dishDao = new DishDao();
         for (Integer dishId : dishIds) {
-            dishes.add(dishDao.selectById(dishId));
+            Dish dish = dishDao.selectById(dishId);
+            dishes.add(dish);
         }
         order.setDishes(dishes);
         return order;
     }
     //
-    private List<Integer> selectDishId(int orderId) {
+    private List<Integer> selectDishIds(int orderId) {
         List<Integer> dishIds = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -234,7 +235,7 @@ public class OrderDao {
     }
 
     //根据orderId 来查询对应的Order 对象的基本信息
-    private Order buileOrder(int orderId) {
+    private Order buildOrder(int orderId) {
         Order order = new Order();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -251,14 +252,14 @@ public class OrderDao {
                 order.setUserId(rs.getInt("userId"));
                 order.setTime(rs.getTimestamp("time"));
                 order.setIsDone(rs.getInt("isDone"));
+                return order;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(conn,ps,rs);
         }
-        return order;
-
+        return null;
     }
     //5.修改订单状态(订单是否已经完成)
     public void changeState(int orderId,int isDone) throws OrderSystemException {
