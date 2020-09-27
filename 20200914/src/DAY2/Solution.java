@@ -12,21 +12,30 @@ public class Solution {
      */
     public int[] pushIntArray (int[] arr, int pushOffset) {
         // write code here
-        String s = "";
-        for (int i = 0; i < arr.length; i++) {
-            s = s + String.valueOf(arr[i]);
+        int len = arr.length;
+        int count = pushOffset % len;
+        while (count > 0) {
+            int tmp = arr[len - 1];
+            for (int i = len - 1; i > 0; i--) {
+                arr[i] = arr[i - 1];
+            }
+            arr[0] = tmp;
+            count--;
         }
-        int len = s.length();
-        String str1 = s.substring(len-pushOffset%len);
-        String str2 = s.substring(0,len-pushOffset%len);
-        String ret = str1 + str2;
-        int[] res = new int[ret.length()];
-        for (int i = 0; i < ret.length(); i++) {
-            char c = ret.charAt(i);
-            res[i] = Integer.parseInt(String.valueOf(c));
+        return arr;
+        /*if (pushOffset >= arr.length) {
+            pushOffset = pushOffset%arr.length;
         }
-        return res;
-
+        int[] a = new int[arr.length];
+        for (int i = 0; i < pushOffset; i++) {
+            a[i] = arr[arr.length-pushOffset+i];
+        }
+        int j = 0;
+        for (int i = pushOffset; i < arr.length; i++) {
+            a[i] = arr[j];
+            j++;
+        }
+        return a;*/
     }
 
     public static void main(String[] args) {
