@@ -112,12 +112,49 @@ public class Sort {
             }
         }
     }
+
+    //快速排序
+    public static void quickSort(int[] array) {
+        quickHelper(array,0,array.length - 1);
+    }
+
+    private static void quickHelper(int[] array, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+        //针对[left,right]区间进行管理
+        //index返回值就是整理完毕后，left和right的重合位置，知道了这个位置，才能进一步进行递归
+
+        int index = partition(array,left,right);
+        quickHelper(array,left,index - 1);
+        quickHelper(array,index + 1,right);
+
+    }
+
+    private static int partition(int[] array, int left, int right) {
+        int i = left;
+        int j = right;
+        int key = array[right];
+        while (i < j) {
+            while (i < j && array[i] <= key) {
+                i++;
+            }
+            while (i < j && array[j] >= key) {
+                j--;
+            }
+            swap(array,i,j);
+        }
+        swap(array,i,right);
+        return i;
+    }
+
     public static void main(String[] args) {
         int[] array = {1,5,3,9,2,4,6};
         //insertSort(array);
         //shellSort(array);
         //heapSort(array);
-        bubbleSort(array);
+        //bubbleSort(array);
+        quickSort(array);
         System.out.println(Arrays.toString(array));
     }
     
