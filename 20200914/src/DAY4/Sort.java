@@ -1,6 +1,7 @@
 package DAY4;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 public class Sort {
     //插入排序
@@ -113,6 +114,7 @@ public class Sort {
         }
     }
 
+
     //快速排序
     public static void quickSort(int[] array) {
         quickHelper(array,0,array.length - 1);
@@ -146,6 +148,30 @@ public class Sort {
         }
         swap(array,i,right);
         return i;
+    }
+
+    public static void quickSortByLoop(int[] array) {
+        //借助栈，模拟实现递归的过程
+        //stack 用来存放数组下标，通过下标来表示接下来要处理的区间是啥
+        Stack<Integer> stack = new Stack<>();
+        //初始情况下，先把右侧边界下标入栈，再从左侧边界下标入栈，左右边界仍然构成前闭后闭区间。
+        stack.push(array.length - 1);
+        stack.push(0);
+
+        while (!stack.isEmpty()){
+            int left = stack.pop();
+            int right = stack.pop();
+            if (left >= right) {
+                continue;
+            }
+
+            int index = partition(array,left,right);
+            stack.push(right);
+            stack.push(index + 1);
+            stack.push(index - 1);
+            stack.push(left);
+        }
+
     }
 
     public static void main(String[] args) {
