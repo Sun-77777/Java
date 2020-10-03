@@ -173,7 +173,10 @@ public class Sort {
         }
     }
 
-    public static void mergeSort()
+    //归并排序
+    public static void mergeSort() {
+
+    }
 
     public static void main(String[] args) {
         int[] array = {1,5,3,9,2,4,6};
