@@ -4,5 +4,6 @@ public class A {
         sb.append("hello");
         sb.append("hello");
         //单线程锁消除
+        //
     }
 }
