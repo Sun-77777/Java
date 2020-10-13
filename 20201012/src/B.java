@@ -1,26 +1,49 @@
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public class B {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Callable<Integer> callable = new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                int ret = 0;
-                for (int i = 1; i <= 100; i++) {
-                    ret += i;
+        Scanner scanner = new Scanner(System.in);
+        int count = 0;
+        int buy = scanner.nextInt();
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        int c = scanner.nextInt();
+        int price = scanner.nextInt();
+        int c_size = price/100;
+        int ret = 0;
+        while (buy > 0) {
+            if (c_size <= c) {
+                count += c_size;
+                if (price%100 != 0) {
+                    count = count + 1;
+                    ret = count*100-price;
+                    b += ret/50;
+                    a += (ret%50)/10;
+                    ret = 0;
                 }
-                return ret;
+                c -= c_size;
+            } else {
+                count += c;
+                int cur_price = price - 100*c;
+                int b_size = cur_price/50;
+                if (b_size <= b) {
+                    count += b_size;
+                    if (cur_price%50 != 0) {
+                        count = count + 1;
+                        ret = count*50 - cur_price;
+                        a += ret/10;
+                    }
+                } else {
+                    int aa_price = cur_price - 50*b;
+                    int a_size = aa_price/10;
+                    count += a_size;
+                }
             }
-        };
-
-        FutureTask<Integer> futureTask = new FutureTask<>(callable);
-        Thread t = new Thread(futureTask);
-        t.start();
-
-        Integer result = futureTask.get();
-        //get方法为阻塞，直到线程结束，才会返回。
-        System.out.println(result);
+            buy--;
+        }
+        System.out.println(count);
     }
 }
