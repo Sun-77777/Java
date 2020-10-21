@@ -5,46 +5,37 @@ import java.util.Scanner;
 public class A {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
-        int index = str.lastIndexOf("]");
-        Map<Integer,Integer> map = new HashMap<>();
-        char[] c = str.toCharArray();
-        int count = 0;
-        int key = 0;
-        int value = 0;
-        for (int i = 1; i < index; i++) {
-            if (c[i] == '[') {
-                count++;
-                continue;
-            } else if (c[i] == ',') {
-                continue;
-            } else if (c[i] == ']') {
-                count--;
-                continue;
+        String[] strings = new String[100];
+        int i = 0;
+        while (scanner.hasNext()) {
+            strings[i] = scanner.nextLine();
+            i++;
+        }
+        String[] users = new String[i];
+        String[] devices = new String[i];
+        String user = "";
+        for (int j = 0; j <= i; j++) {
+            int index = strings[i].indexOf(",");
+            if (index != -1) {
+                users[j] = strings[i].substring(0,index);
+                devices[j] = strings[i].substring(index);
             } else {
-                if (count == 1) {
-                    value = Integer.parseInt(String.valueOf(c[i]));
-                    count++;
-                    continue;
-                }
-                if (count == 2) {
-                    key = Integer.parseInt(String.valueOf(c[i]));
-                    count--;
-                    map.put(key,value);
-                }
+                user = strings[j];
             }
         }
-        int k = str.lastIndexOf(",");
-        int start = Integer.parseInt(str.substring(index+2,k));
-        int end = Integer.parseInt(str.substring(k+1));
-
-        int v = map.get(end);
-        int num = 1;
-        while (v != start) {
-            v = map.get(v);
-            num++;
+        int m = 0;
+        for (int k = 0; k < i-1; k++) {
+            if (user.equals(users[k])) {
+                m = k;
+                break;
+            }
         }
-        System.out.println(num);
-
+        int count = 0;
+        for (int k = 0; k < i-1; k++) {
+            if (devices[m] == devices[k]) {
+                count++;
+            }
+        }
+        System.out.println(count);
     }
 }
