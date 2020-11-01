@@ -14,4 +14,24 @@ public class Sort {
              array[j+1] = v;
          }
     }
+    public static void shellSort(int[] array) {
+        int gap = array.length;
+        while (gap > 1) {
+            insertSortGap(array,gap);
+            gap = gap / 2;
+        }
+    }
+
+    public static void insertSortGap(int[] array,int gap) {
+        for (int i = gap; i < array.length; i++) {
+            int v = array[i];
+            int j = i - gap;
+            for (; j >= 0; j -= gap) {
+                if (array[j] > v) {
+                    array[j + gap] = array[j];
+                }
+            }
+            array[j + gap] = v;
+        }
+    }
 }
