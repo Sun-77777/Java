@@ -12,6 +12,7 @@ time.sleep(6)
 #点击上传按钮
 driver.find_element_by_xpath("//*[@id='blog-collapse']/form/div[2]/input").click()
 time.sleep(6)
+driver.quit()
 
 
 
