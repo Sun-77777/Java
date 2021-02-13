@@ -3,24 +3,22 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String nstr = scanner.nextLine();
-        int n = Integer.parseInt(nstr);
-        int len = 0;
+        String str = scanner.nextLine();
+        char[] c = str.toCharArray();
         int count = 0;
-        for (int i = 0; i < n; i++) {
-            String str = scanner.nextLine();
-            int start = str.indexOf("[");
-            int end = str.indexOf("]");
-            int num = Integer.parseInt(str.substring(start+1,end));
-
-            if (!str.contains("=")) {
-                len = num;
-            } else {
-                if (len < num) {
-                    count = i+1;
-                }
+        int max = 0;
+        int end = 0;
+        for (int i = 0; i < c.length; i++) {
+            count = 0;
+            while (c[i] >= '0' && c[i] <= '9') {
+                count++;
+                i++;
+            }
+            if (count > max) {
+                max = count;
+                end = i;
             }
         }
-        System.out.println(count);
+        System.out.println(str.substring(end-max,end) + "," + max);
     }
 }
