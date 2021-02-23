@@ -35,4 +35,7 @@ buttons = div2.find_element_by_tag_name("button")
 buttons[0].click()
 
 
+#定位上传文件按钮
+driver.find_element_by_tag_name("input").send_keys("d:/")
+
 driver.quit()
