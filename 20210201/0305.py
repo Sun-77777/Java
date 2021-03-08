@@ -1,8 +1,9 @@
 from selenium import webdriver
 import time
+#from selenium.webdriver.common.keys import Keys
 import os
 driver = webdriver.Chrome()
-driver.get("https://www.baidu.com")
+driver.get("https://www.baidu.com/")
 
 #浏览器的缩小
 driver.minimize_window()
