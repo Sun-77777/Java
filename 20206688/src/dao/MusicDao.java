@@ -33,6 +33,7 @@ public class MusicDao {
                 music.setUserid(rs.getInt("userid"));
                 listmusic.add(music);
             }
+            System.out.println(listmusic);
 
         } catch (SQLException e) {
             e.printStackTrace();
