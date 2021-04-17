@@ -124,16 +124,4 @@ public class DishDao {
         return dish;
     }
 
-    public static void main(String[] args) throws OrderSystemException {
-        DishDao dishDao = new DishDao();
-        List<Dish> list = new ArrayList<>();
-        list = dishDao.selectAll();
-        System.out.println(list);
-        /*int ret = dishDao.delete(1);
-        System.out.println(ret);*/
-        /*Dish dish = new Dish();
-        dish.setName("红烧肉");
-        dish.setPrice(5000);
-        dishDao.add(dish);*/
-    }
 }

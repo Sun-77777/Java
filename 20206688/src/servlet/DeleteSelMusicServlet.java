@@ -32,8 +32,8 @@ public class DeleteSelMusicServlet extends HttpServlet {
             Music music = musicService.findMusicById(id);
             int delete = musicService.deleteMusicById(id);
             if (delete == 1) {
-                //File file = new File("D:\\Javacodeeee\\Java\\20206688\\web\\" + music.getUrl() + ".mp3");
-                File file = new File("/root/java16/apache-tomcat-8.5.57/webapps/onlineMusic/" + music.getUrl() + ".mp3");
+                File file = new File("D:\\Javacodeeee\\Java\\20206688\\web\\" + music.getUrl() + ".mp3");
+                //File file = new File("/root/java16/apache-tomcat-8.5.57/webapps/onlineMusic/" + music.getUrl() + ".mp3");
 
                 if (file.delete()) {
                     count += delete;

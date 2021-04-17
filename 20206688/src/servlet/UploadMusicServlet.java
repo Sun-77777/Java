@@ -19,8 +19,8 @@ import java.util.List;
 @WebServlet("/upload")
 public class UploadMusicServlet extends HttpServlet {
 
-    //private final String PATH = "D:\\Javacodeeee\\Java\\20206688\\web\\music";
-    private final String PATH = "/root/java16/apache-tomcat-8.5.57/webapps/onlineMusic/music";
+    private final String PATH = "D:\\Javacodeeee\\Java\\20206688\\web\\music";
+    //private final String PATH = "/root/java16/apache-tomcat-8.5.57/webapps/onlineMusic/music";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

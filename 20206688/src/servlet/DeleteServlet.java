@@ -38,7 +38,7 @@ public class DeleteServlet extends HttpServlet {
         if (delete == 1) {
             System.out.println("数据库中删除成功");
 
-            File file = new File("/root/java16/apache-tomcat-8.5.57/webapps/onlineMusic/" + music.getUrl() + ".mp3");
+            File file = new File("D:\\Javacodeeee\\Java\\20206688\\web\\" + music.getUrl() + ".mp3");
 
             if (file.delete()) {
                 return_map.put("msg",true);
